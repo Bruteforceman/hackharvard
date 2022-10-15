@@ -14,10 +14,29 @@ Content-Type: application/json
 GET http://localhost:8888/api/whoami
 
 ###
-POST http://localhost:8888/api/login 
+POST http://localhost:8888/api/login
 Content-Type: application/json
 
 {
     "email": "tasmeemreza@gmail.com",
-    "password": "pepedamn"
+    "password": "lmao"
+} 
+
+
+###
+POST http://localhost:8888/api/playnow 
+Content-Type: application/json
+
+{
+    "sports": ["basketball", "volleyball", "soccer", "football"],
+    "fields": ["field1", "field2", "field3"]
+}
+###
+POST http://localhost:8888/api/playlater 
+Content-Type: application/json
+
+{
+    "sports": ["basketball", "volleyball", "soccer", "football"],
+    "fields": ["field1", "field2", "field3"],
+    "times": [3,5,7,42,69,420]
 }
