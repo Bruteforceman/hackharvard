@@ -1,0 +1,13 @@
+.form-container {
+    padding: 3em;
+}
+
+.form-container form > * {
+    box-sizing: border-box;
+    width: 75%;
+    margin: 1em;
+    padding: 1em;
+    font-size: 1.5em;
+}
+
+
