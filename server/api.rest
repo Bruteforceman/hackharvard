@@ -1,0 +1,23 @@
+GET http://localhost:8888/api/demo
+
+###
+POST http://localhost:8888/api/register
+Content-Type: application/json
+
+{
+    "email": "tasmeemreza@gmail.com",
+    "password": "lmao",
+    "university": "MIT"
+}
+
+###
+GET http://localhost:8888/api/whoami
+
+###
+POST http://localhost:8888/api/login 
+Content-Type: application/json
+
+{
+    "email": "tasmeemreza@gmail.com",
+    "password": "pepedamn"
+}

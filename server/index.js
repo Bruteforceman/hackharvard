@@ -1,6 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const session = require('express-session')
+const api = require('./api')
 const User = require("./user")
 require('dotenv').config()
 
@@ -16,13 +17,6 @@ mongoose.connect(mongoURI).then(() => {
   console.log('Connected to MongoDB')
 }).catch(err => console.log(err))
 
-app.get('/', (req, res) => {
-  res.send('HackHarvard 2022')
-})
-
-app.listen(port, () => {
-  console.log(`Website running at port ${port}`)
-})
 
 app.use(express.json())
 app.use(session({
@@ -31,6 +25,16 @@ app.use(session({
     saveUninitialized: true
   }
 ))
+app.use('/api', api)
+
+app.get('/', (req, res) => {
+  res.send('HackHarvard 2022')
+})
+
+app.listen(port, () => {
+  console.log(`Website running at port ${port}`)
+})
+
 
 async function main() {
   const newUser = new User({
