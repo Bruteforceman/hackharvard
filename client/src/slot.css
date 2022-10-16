@@ -1,0 +1,57 @@
+.time {
+    border-radius: 5px;
+    width: 3em;
+    height: 2em;
+    min-width: 3ch;
+    cursor: pointer;
+}
+
+th {
+    width: 2em;
+    font-weight: normal;
+    text-align: right;
+    padding-right: 1em;
+}
+
+.time-normal {
+    background-color: orange;
+}
+.time-normal:hover {
+    background-color: darkorange;
+}
+
+.time-selected {
+    background-color: maroon;
+}
+.time-selected:hover {
+    background-color: brown;
+}
+
+.wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-auto-rows: 250px;
+    grid-gap: 1em;
+}
+
+.wrapper > div {
+    border: 1px solid black;
+}
+
+.field-wrapper, .sport-wrapper {
+    text-align: left;
+}
+.field-wrapper *, .sport-wrapper * {
+    border: 1px solid black;
+    margin: 10px;
+}
+
+.team-wrapper {
+    grid-row: 1/4;
+    grid-column: 4/4;
+}
+
+.time-wrapper {
+    grid-row: 2/4;
+    grid-column: 1/4;
+}
