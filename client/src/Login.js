@@ -1,8 +1,10 @@
 import { post } from "./utilities"
 import { useState } from "react"
 import "./Auth.css"
+import { useNavigate } from "react-router-dom"
 
 function Login() {
+    const navigate = useNavigate()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const handleSubmit = (event) => {
@@ -10,7 +12,11 @@ function Login() {
         post('/api/login', {
             'email': email,
             'password': password
-        }).then(res => console.log(res))
+        }).then(data => {
+            if(data.success) {
+                navigate("/home")
+            }
+        })
     }
     const changeEmail = (event) => {
         setEmail(event.target.value)
@@ -22,7 +28,7 @@ function Login() {
         <form onSubmit={handleSubmit}>
             <input name="email" type="email" placeholder="Email Address" onChange={changeEmail} required />
             <input name="password" type="password" placeholder="Password" onChange={changePassword} required />
-            <input type="submit" value="Sign in" />
+            <input type="submit" value="Sign in" className="button" />
         </form>
     </div>
 }

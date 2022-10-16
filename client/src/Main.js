@@ -12,6 +12,9 @@ function Main() {
     const [selectedFields, setSelectedFields] = useState(null)
     const [selectedSports, setSelectedSports] = useState(null)
     const [selectedTimes, setSelectedTimes] = useState(null)
+    const [teams, setTeams] = useState([])
+    const [current, setCurrent] = useState(null)
+    const [curTime, setCurTime] = useState(0)
 
     useEffect(() => {
         const fetch = async () => {
@@ -25,6 +28,8 @@ function Main() {
                 setSelectedFields(dbUser.fields)
                 setSelectedSports(dbUser.sports)
                 setSelectedTimes(dbUser.times)
+                setTeams(await get('/api/getteams'))
+                setCurTime(await get('/api/getrowmajor'))
             }
         }
         fetch()
@@ -55,13 +60,14 @@ function Main() {
         }
     }
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault()
         post('/api/playlater', {
             'sports': selectedSports,
             'fields': selectedFields,
             'times': selectedTimes
         })
+        setTeams(await get('/api/getteams'))
     }
 
     useEffect(() => {
@@ -72,9 +78,13 @@ function Main() {
         console.log(selectedSports)
     }, [selectedSports])
 
-    return (user === null || fields === null) ? <p>You need to be logged in</p> : (<div>
-        <p>Name: {user.email} </p>
-        <p>University: {user.university} </p>
+    useEffect(() => {
+        console.log(teams)
+    }, [teams])
+
+    return (user === null || fields === null) ? <p>You need to be logged in</p> : (<div className="home">
+        {/* <p>Name: {user.email} </p>
+        <p>University: {user.university} </p> */}
         <form onSubmit={handleSubmit}>
             <div className="wrapper">
                 <div className="field-wrapper">
@@ -98,21 +108,46 @@ function Main() {
                 }
                 </div>
                 <div className="team-wrapper">
+                    <h3>Available Teams</h3>
+                    { current && teams && teams.length > current ? (<div>
+                            { teams[current].map(obj => (<div> 
+                                    <b> { `${obj.field} (${obj.sport})` } </b> <br />
+                                    {
+                                        obj.team.map(member => <>{`${member.firstname} ${member.lastname} (${member.email})`} <br/> </>)
+                                    }
+                                    <br />
+                                 </div>)) 
+                            }
+                         </div>) : ""
+                    }
                 </div>
                 <div className="time-wrapper">
                 <table>
                     <tr>
-                        <th></th>
-                        { hours.map(i => <td>{i}</td> ) }
+                        { hours.map(i => <th>{i}</th> ) }
                     </tr>
                     { days.map((day, j) => <tr><th>{day}</th> { 
                         hours.map(i => <td className={selectedTimes.some(time => time === rowMajor(j, i)) ? 
-                        "time time-selected" : "time time-normal" } onClick={e => selectTime(e, j, i)}></td> ) } </tr>) }
+                        "time time-selected" : "time time-normal" + (curTime === rowMajor(j, i) ? " time-current" : "")} onClick={e => selectTime(e, j, i)} 
+                        onMouseEnter={e => setCurrent(rowMajor(j, i))} 
+                        onMouseLeave={e => setCurrent(null)}></td> ) } </tr>) }
                 </table>
+                <input type="submit" value="Submit" className="button"/>
                 </div>
-                <div className="game-wrapper"></div>
+                <div className="game-wrapper">
+                { curTime && teams && teams.length > curTime && teams[curTime].length > 0 ? (<div>
+                            { teams[curTime].map(obj => (<div> 
+                                    <b> { `${obj.field} (${obj.sport})` } </b> <br />
+                                    {
+                                        obj.team.map(member => <>{`${member.firstname} ${member.lastname} (${member.email})`} <br/> </>)
+                                    }
+                                    <br />
+                                 </div>)) 
+                            }
+                         </div>) : "No teams could be formed for the current hour."
+                    }
+                </div>
             </div>
-            <input type="submit" value="Submit" />
         </form>
     </div>)
 }

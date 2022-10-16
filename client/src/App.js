@@ -9,6 +9,7 @@ import { Routes, Route, BrowserRouter } from "react-router-dom";
 function App() {
   return (
     <div className="App">
+      <h1 className="title">Sports Buddy</h1>
       <BrowserRouter>
         <Routes>
             <Route path="/" element={<Register />} />

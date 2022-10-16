@@ -1,3 +1,17 @@
+body {
+  background-color: #696773;  
+}
+
+.title {
+  font-size: 50px;
+  background-color: #3b3648;
+  color: #7d7798;
+  width: 100%;
+  text-align: center;
+  margin: 0;
+  padding: 10px;
+}
+
 .App {
   text-align: center;
 }

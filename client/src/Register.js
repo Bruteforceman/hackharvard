@@ -2,6 +2,8 @@
 import { post } from "./utilities"
 import { useState } from "react"
 import "./Auth.css"
+import { useNavigate, Link } from "react-router-dom"
+
 
 function Register() {
     const universities = ["Drexel University", "Harvard University", "MIT", "Villanova University"]
@@ -10,6 +12,8 @@ function Register() {
     const [university, setUniversity] = useState("")
     const [firstname, setFirstname] = useState("")
     const [lastname, setLastname] = useState("")
+    const navigate = useNavigate()
+
     const handleSubmit = (event) => {
         event.preventDefault()
         post('/api/register', {
@@ -18,7 +22,11 @@ function Register() {
             'email': email,
             'password': password,
             'university': university
-        }).then(res => console.log(res))
+        }).then(data => {
+            if(data.success) {
+                navigate("/home")
+            }
+        })
     }
     const changeFirstname = (event) => {
         setFirstname(event.target.value)
@@ -46,7 +54,8 @@ function Register() {
                     universities.map((uni) => <option value={uni}>{uni}</option>)
                 }
             </select>
-            <input type="submit" value="Sign up" />
+            <h3>Already have an <Link to="/login">account</Link>?</h3>
+            <input type="submit" value="Sign up" className="button" />
         </form>
     </div>
 }

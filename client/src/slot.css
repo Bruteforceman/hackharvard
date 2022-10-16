@@ -8,9 +8,13 @@
 
 th {
     width: 2em;
-    font-weight: normal;
     text-align: right;
     padding-right: 1em;
+    color: aliceblue;
+}
+
+.home {
+    margin: 1em;
 }
 
 .time-normal {
@@ -35,23 +39,68 @@ th {
 }
 
 .wrapper > div {
-    border: 1px solid black;
+    border-radius: 1em;
+    padding: 1em;
 }
 
 .field-wrapper, .sport-wrapper {
     text-align: left;
 }
 .field-wrapper *, .sport-wrapper * {
-    border: 1px solid black;
     margin: 10px;
+    font-weight: bolder;
+}
+
+.field-wrapper {
+    background-color: #696773;
+    background-color: #819595;    
+}
+
+.sport-wrapper {
+    background-color: #819595;
 }
 
 .team-wrapper {
+    overflow: auto;
     grid-row: 1/4;
     grid-column: 4/4;
+    background-color: #819595;
+    padding-top: 2em;
 }
 
 .time-wrapper {
     grid-row: 2/4;
     grid-column: 1/4;
+    background-color: #B1B6A6;
+  background-color: #696773;  
+
+}
+
+.game-wrapper {
+    background-color: #393946;
+    background-color: #819595;
+    overflow: auto;
+}
+
+.time-wrapper table {
+    margin: auto;
+    padding: 3em;
+}
+
+.time-current { 
+    background-color: green;
+}
+
+.button {
+    background-color: crimson;
+    border-radius: 3px;
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+h3 {
+    margin-top: 0;
 }
