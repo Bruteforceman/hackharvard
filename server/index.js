@@ -1,6 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const session = require('express-session')
+const nodemailer = require('nodemailer');
 const api = require('./api')
 const User = require("./user")
 require('dotenv').config()
@@ -37,10 +38,23 @@ app.listen(port, () => {
 
 
 async function main() {
-  const newUser = new User({
-    name: "tasmeemreza@gmail.com",
-    password: "hahah"
-  })
-  console.log(await newUser.save())
+  const transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 587,
+    auth: {
+      user: process.env.GMAIL_EMAIL,
+      pass: process.env.GMAIL_PASS,
+    },
+  });transporter.verify().then(console.log).catch(console.error);
+
+  transporter.sendMail({
+    from: `"Sports Buddy" <${process.env.GMAIL_EMAIL}>`, // sender address
+    to: "alam.sami.md@gmail.com", // list of receivers
+    subject: "Sports buddy ✔", // Subject line
+    text: "There is a new article. It's about sending emails, check it out!", // plain text body
+    html: "<b>There is a new article. It's about sending emails, check it out!</b>", // html body
+  }).then(info => {
+    console.log({info});
+  }).catch(console.error);
 }
 // main()
